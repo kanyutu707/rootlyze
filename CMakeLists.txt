@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
+cmake_policy(SET CMP0167 NEW)
+
 project(rootlyze VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -16,6 +18,16 @@ target_include_directories(rootlyze
     PRIVATE
         ${CMAKE_SOURCE_DIR}/include
 )
+
+find_package(Boost CONFIG REQUIRED system)
+
+target_link_libraries(rootlyze
+    PRIVATE
+        Boost::system
+        Boost::headers
+)
+
+target_compile_definitions(rootlyze PRIVATE BOOST_ASIO_DISABLE_THREADS=0)
 
 if (MSVC)
     target_compile_options(rootlyze PRIVATE /W4 /permissive-)
