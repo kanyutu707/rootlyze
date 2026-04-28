@@ -19,18 +19,18 @@ target_include_directories(rootlyze
         ${CMAKE_SOURCE_DIR}/include
 )
 
-find_package(Boost CONFIG REQUIRED system)
+find_package(Boost CONFIG REQUIRED COMPONENTS system json)
 
 target_link_libraries(rootlyze
     PRIVATE
         Boost::system
-        Boost::headers
+        Boost::json
 )
 
 target_compile_definitions(rootlyze PRIVATE BOOST_ASIO_DISABLE_THREADS=0)
 
 if (MSVC)
-    target_compile_options(rootlyze PRIVATE /W4 /permissive-)
+    target_compile_options(rootlyze PRIVATE /W4 /permissive- /WX)
 else()
     target_compile_options(rootlyze PRIVATE
         -Wall
