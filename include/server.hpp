@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SERVER_HPP
+#define SERVER_HPP
 
 #include <boost/asio.hpp>
 
@@ -13,3 +14,5 @@ private:
     boost::asio::io_context ioc_;
     boost::asio::ip::tcp::acceptor acceptor_;
 };
+
+#endif

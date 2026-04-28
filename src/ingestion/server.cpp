@@ -1,7 +1,7 @@
 #include "server.hpp"
+#include "process.hpp"
 
 #include <boost/beast.hpp>
-#include <iostream>
 #include <memory>
 
 namespace beast = boost::beast;
@@ -32,14 +32,23 @@ private:
 
     void handle_request() {
         if (request_.method() == http::verb::post) {
-            std::cout << request_.body() << std::endl;
+            try {
+                Process processor;
+                Process::syslogs log = processor.parseLogs(request_.body());
+                response_.result(http::status::ok);
+                response_.body() = "Log processed";
+            } catch (const std::exception&) {
+                response_.result(http::status::bad_request);
+                response_.body() = "Invalid JSON";
+            }
+        } else {
+            response_.result(http::status::method_not_allowed);
+            response_.body() = "Only POST allowed";
         }
 
         response_.version(request_.version());
-        response_.result(http::status::ok);
         response_.set(http::field::server, "rootlyze");
         response_.set(http::field::content_type, "text/plain");
-        response_.body() = "OK";
         response_.prepare_payload();
 
         write_response();
