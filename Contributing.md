@@ -77,7 +77,7 @@ The key rules:
 - Prefer move semantics over copies for structs passing through the pipeline.
 - Use `std::optional<T>` for values that may be absent. Do not use sentinel values or null pointers for optional fields.
 - Error handling follows the project's layered strategy: recoverable per-entry errors produce warnings and continue; fatal startup errors terminate immediately with a clear message.
-- No heap allocation in the hot path unless justified and documented.
+- No heap allocation in the hot path unless it is justified and documented.
 
 ---
 
@@ -100,7 +100,7 @@ What to test:
 - Research engine tests must cover the degradation path (external research unavailable)
 - If you are adding a new diagnosis rule, include a log fixture that triggers it and verify the expected `DiagnosisResult`
 
-Test files live in `tests/`. Follow the existing structure — one test file per component.
+Test files live in `tests/`. Follow the existing structure, one test file per component.
 
 ---
 
@@ -133,7 +133,7 @@ Open a pull request against `main` on the upstream repository. In the PR descrip
 
 ### 4. Wait for Review
 
-@kanyutu707 will review and merge approved changes. Do not merge your own PR. If changes are requested, push additional commits to the same branch — do not open a new PR.
+@kanyutu707 will review and merge approved changes. Do not merge your own PR. If changes are requested, push additional commits to the same branch rather than opening a new PR.
 
 ---
 
